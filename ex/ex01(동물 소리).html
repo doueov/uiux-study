@@ -7,14 +7,17 @@
 </head>
 
 <script>
+    // a태그를 클릭하면 파라미터 안의 내용이 들어가 if조건에 해당하면
+    // 조건에 맞는 울음소리를 내도록 함
     function on_animal(animal) {
         const soundsTag = document.getElementById("sounds");
         if (animal == "dog") {
-            soundsTag.innerHTML = "멍멍!";
+            // dom 요소인 soundsTag의 요소를 innerHTML을 사용해 값 내용을 변경
+            soundsTag.innerHTML = "멍멍!"; 
         } else if (animal == "cat") {
             soundsTag.innerHTML = "야옹~";
         } else if (animal == "duck") {
-            soundsTag.innerHTML = "꽥꽥!";
+            soundsTag.innerHTML = "꽥꽥!";  
         } else {
             soundsTag.innerHTML = "몰라요";
         }
