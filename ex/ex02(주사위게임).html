@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주사위 게임</title>
     <style>
+        /* 주사위 띄우는 style */
         .dice {
             width: 100px;
             height: 100px;
@@ -18,28 +18,27 @@
         }
     </style>
     <script>
-        
-         function rollDice() {
-            let arr = [];
-            const diceElement = document.getElementById("dice_group");
-            diceElement.innerHTML = ""; 
-            for (let i = 0; i < 6; i++) {
-                let randomNumber = Math.floor(Math.random() * 6) + 1;
-                let randomDiv = `<div class="dice">${randomNumber}</div>`;  // 계속 누적되도록
-                diceElement.innerHTML += randomDiv;
-                arr.push(randomNumber);
-            }
-            console.log(arr);
-            localStorage.setItem("arrNumber", arr);
-        }
+        // 주사위를 굴리는 함수
+        function rollDice() {
+            let arr = []; // 주사위 숫자를 저장할 배열 선언
+            const diceElement = document.getElementById("dice_group");  // 주사위의 결과를 보여줌
+            diceElement.innerHTML = ""; // 기존의 주사위 결과를 지우고 초기화
 
+            // 6번 주사위를 던지는 반복문
+            for (let i = 0; i < 6; i++) {
+                let randomNumber = Math.floor(Math.random() * 6) + 1; // 1부터 6까지의 난수 생성
+                let randomDiv = `<div class="dice">${randomNumber}</div>`; // 주사위 결과를 보여주는 div 생성
+                diceElement.innerHTML += randomDiv; // 결과를 보여주는 div를 diceElement에 추가
+                arr.push(randomNumber); // 주사위 숫자를 배열에 추가
+            }
+            console.log(arr); // 주사위 숫자 배열을 콘솔에 출력
+            localStorage.setItem("arrNumber", arr); // 주사위 숫자 배열을 로컬 스토리지에 저장
+        }
     </script>
 </head>
-
 <body>
     <h1>주사위 게임</h1>
-    <div id="dice_group"></div>
-    <button onclick="rollDice()">주사위 6번 던지기</button>
+    <div id="dice_group"></div> <!-- 주사위 결과를 보여줄 div -->
+    <button onclick="rollDice()">주사위 6번 던지기</button> <!-- 주사위를 던지는 버튼 -->
 </body>
-
 </html>
