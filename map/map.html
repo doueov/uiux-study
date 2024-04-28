@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>지도</title>
+
+</head>
+
+<body>
+    <div id="map" style="width: 500px;height: 700px;"></div>
+    <p><em>지도 중심좌표가 변경되면 지도 정보가 표출됩니다</em></p>
+
+    <p>
+        <button onclick="setCenter()">지도 중심좌표 이동시키기</button>
+        <button onclick="panTo()">지도 중심좌표 부드럽게 이동시키기</button>
+    </p>
+
+    <p>
+        <button onclick="resizeMap()">지도 크기 바꾸기</button>
+        <button onclick="relayout()">relayout 호출하기</button>
+    </p>
+
+    <p id="result"></p>
+
+    <div id="map" style="width:100%;height:350px;"></div>
+    <p><em>지도를 클릭해주세요!</em></p>
+    <div id="clickLatlng"></div>
+
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=762ff92faa16d0a8452ef6fe6c7610e6"></script>
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(37.571, 126.9778), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+        kakao.maps.event.addListener(map, 'center_changed', function () {
+
+            // 지도의  레벨을 얻어옵니다
+            var level = map.getLevel();
+
+            // 지도의 중심좌표를 얻어옵니다 
+            var latlng = map.getCenter();
+
+            var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
+            message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
+
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+
+        });
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(37.571, 126.9778), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        var marker = new kakao.maps.Marker();
+
+        // 타일 로드가 완료되면 지도 중심에 마커를 표시합니다
+        kakao.maps.event.addListener(map, 'tilesloaded', displayMarker);
+
+        function displayMarker() {
+
+            // 마커의 위치를 지도중심으로 설정합니다 
+            marker.setPosition(map.getCenter());
+            marker.setMap(map);
+
+            // 아래 코드는 최초 한번만 타일로드 이벤트가 발생했을 때 어떤 처리를 하고 
+            // 지도에 등록된 타일로드 이벤트를 제거하는 코드입니다 
+            // kakao.maps.event.removeListener(map, 'tilesloaded', displayMarker);
+        }
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(37.571, 126.9778), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        function setCenter() {
+            // 이동할 위도 경도 위치를 생성합니다 
+            var moveLatLon = new kakao.maps.LatLng(37.571, 126.9778);
+
+            // 지도 중심을 이동 시킵니다
+            map.setCenter(moveLatLon);
+        }
+
+        function panTo() {
+            // 이동할 위도 경도 위치를 생성합니다 
+            var moveLatLon = new kakao.maps.LatLng(37.571, 126.9778);
+
+            // 지도 중심을 부드럽게 이동시킵니다
+            // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+            map.panTo(moveLatLon);
+        }
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(37.571, 126.9778), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 지도를 표시하는 div 크기를 변경하는 함수입니다
+        function resizeMap() {
+            var mapContainer = document.getElementById('map');
+            mapContainer.style.width = '800px';
+            mapContainer.style.height = '800px';
+        }
+
+        function relayout() {
+
+            // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+            // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+            // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+            map.relayout();
+        }
+
+        // 지도를 클릭한 위치에 표출할 마커입니다
+        var marker = new kakao.maps.Marker({
+            // 지도 중심좌표에 마커를 생성합니다 
+            position: map.getCenter()
+        });
+
+        // 지도에 클릭 이벤트를 등록합니다
+        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+
+            // 클릭한 위도, 경도 정보를 가져옵니다 
+            var latlng = mouseEvent.latLng;
+
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            marker.setPosition(latlng);
+
+            var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+            message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+            var resultDiv = document.getElementById('clickLatlng');
+            resultDiv.innerHTML = message;
+
+        });
+
+    </script>
+</body>
+
+</html>
