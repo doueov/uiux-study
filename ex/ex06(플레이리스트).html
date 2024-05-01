@@ -45,16 +45,16 @@
         // localStorage 값 배열로 가져오기
         function getStoreArray(key) {
             let playlistArray = localStorage.getItem(key);
-            if(playlistArray == null || playlistArray == "") {
+            if (playlistArray == null || playlistArray == "") {
                 playlistArray = new Array();
-            }else {
+            } else {
                 playlistArray = JSON.parse(playlistArray);
             }
             return new Array();
         }
 
         function removeAll() {
-            if(confirm("모두 지우시겠습니까?")) {
+            if (confirm("모두 지우시겠습니까?")) {
                 localStorage.clear();
                 let ul = document.getElementById("playlist");
                 ul.innerHTML = "";
@@ -68,13 +68,13 @@
 
         function addSongList() {
             let cul = document.getElementById("playlist");
-            for(let i=0; i<addSongList.length; i++) {
+            for (let i = 0; i < addSongList.length; i++) {
                 let li = document.createElement("li");
                 li.innerHTML = addSongList[i];
                 ul.appendChild(li);
             }
         }
-        
+
     </script>
 
 </head>
