@@ -3,23 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>학교 급식정보</title>
-
-    <script>
-        fetch("https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=B10&SD_SCHUL_CODE=7011569")
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            })
-
-    </script>
-
+    <title>학교급식정보</title>
 </head>
 
 <body>
-    <!-- https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=B10&SD_SCHUL_CODE=7011569 -->
+    <h3>학교급식정보</h3>
+    <div id="todayMenu"></div>
+    <script>
+        let dateData = new Date().toISOString().slice(0, 10);
+        dateData = dateData.replace(/-/g, "")
+        fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=B10&SD_SCHUL_CODE=7011569&MLSV_YMD=${dateData}`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.mealServiceDietInfo[1]);
+                document.getElementById("todayMenu").innerHTML =
+                    `<h3>[ ${data.mealServiceDietInfo[1].row[0].MMEAL_SC_NM} ]</h3>`
+                    + `${data.mealServiceDietInfo[1].row[0].DDISH_NM}`;
+            })  
+    </script>
+
 </body>
 
 </html>
