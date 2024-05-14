@@ -22,11 +22,9 @@
                 if (data.mealServiceDietInfo) {
                     const menuInfo = data.mealServiceDietInfo[1].row;
                     menuInfo.forEach(function (menu) {
-                        document.getElementById("todayMenu").innerHTML += `${menuInfo[0]}`;
+                        document.getElementById("todayMenu").innerHTML
+                            += `<h3>${menu.MMEAL_SC_NM}</h3>${menu.DDISH_NM}`;
                     });
-                    document.getElementById("todayMenu").innerHTML =
-                        `<h3>[ ${data.mealServiceDietInfo[1].row[0].MMEAL_SC_NM} ]</h3>`
-                        + `${data.mealServiceDietInfo[1].row[0].DDISH_NM}`;
                 } else {
                     document.getElementById("todayMenu").innerHTML = `급식메뉴를 불러오지 못했습니다.`;
                 }
