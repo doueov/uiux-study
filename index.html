@@ -37,10 +37,13 @@
                             let cardItem = document.createElement("div");   // <div></div>
                             cardItem.className = "col";
                             cardItem.innerHTML =
-                                `<div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                `<div class="col">
+                                    <div class="card h-100">
+                                    <img src="..." class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">This is a short card.</p>
+                                    </div>
                                 </div>`
                         });
                     } else {
